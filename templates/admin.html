@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% block title %}Teacher Panel - StudyPulse{% endblock %}
+{% block content %}
+<main class="page">
+  <div class="container">
+    <div class="page-head">
+      <div>
+        <h1>Teacher panel</h1>
+        <p class="muted" style="margin:4px 0 0">See how your students are doing and who needs support.</p>
+      </div>
+    </div>
+
+    <div class="tabs" role="tablist">
+      <button class="tab active" data-tab="class">My class</button>
+      <button class="tab" data-tab="records">Exam records</button>
+      <button class="tab" data-tab="quality">Forecast quality</button>
+    </div>
+
+    <!-- MY CLASS -->
+    <section class="panel active" id="panel-class">
+      <div class="card code-card">
+        <div>
+          <div class="muted">Your class code</div>
+          <div class="code" id="class-code">------</div>
+          <div class="muted" style="font-size:.9rem">Share this code. Students enter it when they sign up, or later on their dashboard.</div>
+        </div>
+        <button class="btn ghost" id="copy-code">Copy code</button>
+      </div>
+      <div class="stats" id="class-stats"></div>
+      <div class="card">
+        <h2>Your students</h2>
+        <p class="muted" style="margin-top:-6px">Students who need support are listed first. Based on each student's latest forecast.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Student</th><th>Latest forecast</th><th>Pass chance</th><th>Study</th><th>Attendance</th><th>Last exam</th><th>Checks</th><th></th></tr></thead>
+            <tbody id="class-body"></tbody>
+          </table>
+        </div>
+        <div id="class-empty" class="empty" style="display:none">No students have joined yet. Share your class code above.</div>
+      </div>
+    </section>
+
+    <!-- EXAM RECORDS (data the forecasts learn from) -->
+    <section class="panel" id="panel-records">
+      <p class="muted" style="margin-top:0">Past exam results <b>you</b> added. Only you can see and change them. The forecasts learn from the records of all teachers, but nobody can see another teacher's records.</p>
+      <div class="stats" id="stats"></div>
+      <div class="two-col">
+        <div class="card"><h2>Marks across the records</h2><div class="chart-box"><canvas id="chart-dist"></canvas></div></div>
+        <div class="card"><h2>Study time vs marks</h2><div class="chart-box"><canvas id="chart-scatter"></canvas></div></div>
+      </div>
+      <div class="card" style="margin-top:24px">
+        <div class="toolbar">
+          <input id="search" type="text" placeholder="Search by student ID..." aria-label="Search records">
+          <span class="grow"></span>
+          <button class="btn" id="add-btn">+ Add record</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>ID</th><th>Study (h/day)</th><th>Attendance</th><th>Last exam</th><th>Exam marks</th><th>Result</th><th></th></tr></thead>
+            <tbody id="students-body"></tbody>
+          </table>
+        </div>
+        <div id="students-empty" class="empty" style="display:none">No records found. Use "+ Add record" to add your first one.</div>
+        <div class="pager"><span id="page-info"></span><span><button class="btn ghost small" id="prev">Previous</button> <button class="btn ghost small" id="next">Next</button></span></div>
+      </div>
+    </section>
+
+    <!-- FORECAST QUALITY -->
+    <section class="panel" id="panel-quality">
+      <div id="quality"></div>
+    </section>
+  </div>
+</main>
+
+<dialog id="student-dialog">
+  <h2 id="dialog-title">Add record</h2>
+  <form id="student-form" novalidate>
+    <div class="field"><label for="f_student_id">Student ID</label><input id="f_student_id" name="student_id" type="text" placeholder="e.g. S301"></div>
+    <div class="form-grid">
+      <div class="field"><label for="f_study_hours">Study hours / day</label><input id="f_study_hours" name="study_hours" type="number" step="0.1" min="0" max="24"></div>
+      <div class="field"><label for="f_attendance">Attendance %</label><input id="f_attendance" name="attendance" type="number" step="0.1" min="0" max="100"></div>
+      <div class="field"><label for="f_previous_marks">Last exam marks</label><input id="f_previous_marks" name="previous_marks" type="number" step="0.1" min="0" max="100"></div>
+      <div class="field"><label for="f_exam_marks">Exam marks</label><input id="f_exam_marks" name="exam_marks" type="number" step="0.1" min="0" max="100"></div>
+    </div>
+    <div id="dialog-alert" class="alert" role="alert"></div>
+    <div class="dialog-actions">
+      <button type="button" class="btn ghost" id="cancel-btn">Cancel</button>
+      <button type="submit" class="btn" id="save-btn">Save</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="history-dialog">
+  <h2 id="history-title">Checks</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>When</th><th>Study</th><th>Attend.</th><th>Last exam</th><th>Forecast</th><th>Pass chance</th></tr></thead>
+      <tbody id="history-rows"></tbody>
+    </table>
+  </div>
+  <div id="history-none" class="empty" style="display:none">This student has not checked a forecast yet.</div>
+  <div class="dialog-actions"><button type="button" class="btn ghost" id="history-close">Close</button></div>
+</dialog>
+{% endblock %}
+{% block scripts %}
+<script src="/static/js/chart.umd.js"></script>
+<script src="/static/js/admin.js"></script>
+{% endblock %}

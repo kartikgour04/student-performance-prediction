@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}StudyPulse - Know where you stand{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="container">
+    <div>
+      <span class="pill great">Free for students</span>
+      <h1 style="margin-top:14px">Know where you stand <span>before the exam does.</span></h1>
+      <p class="lead">Tell us how much you study, how often you attend class and how you did last time. StudyPulse estimates your next exam marks, your chance of passing, and shows what could help you improve.</p>
+      <div class="cta">
+        <a class="btn big" href="/register">Check my performance</a>
+        <a class="btn ghost big" href="/login">I already have an account</a>
+      </div>
+    </div>
+    <div class="card preview" aria-hidden="true">
+      <div class="muted">Example result</div>
+      <div class="big-number">68 <small class="muted" style="font-size:1.1rem">/ 100</small></div>
+      <span class="pill great">92% chance of passing</span>
+      <div style="margin-top:18px">
+        <div class="row"><span>Study time</span><b>4 h / day</b></div>
+        <div class="row"><span>Attendance</span><b>85%</b></div>
+        <div class="row"><span>Last exam</span><b>62 marks</b></div>
+        <div class="row" style="border:0"><span>Tip</span><b>+1 h a day &#8776; +3 marks</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-bottom:8px">
+  <div class="container">
+    <h2>The problem we're solving</h2>
+    <p class="sub">Most students find out they are struggling only when the results arrive. By then it is too late to change anything.</p>
+    <div class="grid3">
+      <div class="card"><h3>&#128584; Students are guessing</h3><p class="muted">"Am I studying enough? Is my attendance hurting me?" Most students have no clear way to connect their habits to their likely result.</p></div>
+      <div class="card"><h3>&#128101; Teachers can't watch everyone</h3><p class="muted">With dozens of students in a class, a teacher cannot notice every student who is slipping before the exam.</p></div>
+      <div class="card"><h3>&#9200; Help comes too late</h3><p class="muted">Support after a failed exam is far less useful than support given weeks earlier. StudyPulse gives an early warning so help can come in time.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>How it works</h2>
+    <p class="sub">Three steps. No setup, nothing to install.</p>
+    <div class="grid3">
+      <div class="card step"><div class="num">1</div><h3>Sign up and join your class</h3><p class="muted">Create a free account. Enter the class code your teacher gives you.</p></div>
+      <div class="card step"><div class="num">2</div><h3>Enter your habits</h3><p class="muted">Study hours, attendance and your last exam marks.</p></div>
+      <div class="card step"><div class="num">3</div><h3>Get your forecast</h3><p class="muted">See your expected marks, pass chance and personal tips. Track progress over time.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>Made for students and teachers</h2>
+    <p class="sub">One place for self-checks and for spotting who needs support.</p>
+    <div class="grid3">
+      <div class="card"><h3>&#127919; Personal forecast</h3><p class="muted">Instant marks estimate and pass chance for your next exam.</p></div>
+      <div class="card"><h3>&#128200; Progress history</h3><p class="muted">Every check is saved, so you can see how your habits move your forecast.</p></div>
+      <div class="card"><h3>&#128105;&#8205;&#127979; Teacher panel</h3><p class="muted">Each teacher gets a class code. See your own students, who needs support first, and how their forecasts change.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer container">
+  Forecasts are estimates based on patterns in sample data. They are not guarantees and should not be used to make decisions about a student.
+</footer>
+{% endblock %}

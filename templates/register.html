@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Sign up - StudyPulse{% endblock %}
+{% block nav_links %}<a class="btn ghost small" href="/login">Log in</a>{% endblock %}
+{% block content %}
+<main class="auth">
+  <div class="card">
+    <h1>Create your account</h1>
+    <p class="muted">Free, and it takes under a minute.</p>
+
+    <div class="role-switch" role="radiogroup" aria-label="I am a">
+      <label><input type="radio" name="role-choice" value="student" checked> <span>I'm a student</span></label>
+      <label><input type="radio" name="role-choice" value="teacher"> <span>I'm a teacher</span></label>
+    </div>
+
+    <div id="alert" class="alert" role="alert"></div>
+    <form id="auth-form" data-endpoint="/api/register">
+      <input type="hidden" name="role" id="role" value="student">
+      <div class="field"><label for="name">Your name</label><input id="name" name="name" type="text" autocomplete="name" required></div>
+      <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required></div>
+      <div class="field"><label for="password">Password</label><input id="password" name="password" type="password" autocomplete="new-password" minlength="6" required><div class="hint">At least 6 characters.</div></div>
+
+      <div class="field" id="student-extra">
+        <label for="class_code">Class code <span class="muted">(optional)</span></label>
+        <input id="class_code" name="class_code" type="text" maxlength="12" autocomplete="off" placeholder="e.g. K7M4QX" style="text-transform:uppercase">
+        <div class="hint">Your teacher gives you this. They will be able to see your forecasts. You can also join later.</div>
+      </div>
+      <div class="field" id="teacher-extra" style="display:none">
+        <label for="teacher_code">Teacher access code</label>
+        <input id="teacher_code" name="teacher_code" type="password" autocomplete="off" disabled>
+        <div class="hint">Ask your school or administrator for this code. You will get a class code to share with your students.</div>
+      </div>
+
+      <button class="btn big" style="width:100%" type="submit">Create account</button>
+    </form>
+    <p class="alt">Already registered? <a href="/login">Log in</a></p>
+  </div>
+</main>
+{% endblock %}
+{% block scripts %}
+<script src="/static/js/auth.js"></script>
+<script>
+  // Show the right extra field for students or teachers.
+  document.querySelectorAll("input[name=role-choice]").forEach((radio) => {
+    radio.addEventListener("change", () => {
+      const teacher = radio.value === "teacher";
+      document.getElementById("role").value = radio.value;
+      document.getElementById("teacher-extra").style.display = teacher ? "block" : "none";
+      document.getElementById("student-extra").style.display = teacher ? "none" : "block";
+      document.getElementById("teacher_code").disabled = !teacher;   // disabled fields are not sent
+      document.getElementById("class_code").disabled = teacher;
+      document.getElementById("teacher_code").required = teacher;
+    });
+  });
+</script>
+{% endblock %}

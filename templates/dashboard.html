@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}My Dashboard - StudyPulse{% endblock %}
+{% block content %}
+<main class="page">
+  <div class="container">
+    <div class="page-head">
+      <div>
+        <h1>Hi, {{ user.name.split(' ')[0] }} &#128075;</h1>
+        <p class="muted" style="margin:4px 0 0">Move the sliders to match your routine, then check your forecast.</p>
+      </div>
+    </div>
+
+    <div id="class-banner" class="card banner" style="display:none"></div>
+
+    <div class="two-col">
+      <section class="card">
+        <h2>Your routine</h2>
+        <form id="predict-form" novalidate>
+          <div class="slider-row">
+            <div class="top"><label for="study_hours">Study time per day</label><span class="val"><output id="o_study_hours">3</output> h</span></div>
+            <input id="study_hours" name="study_hours" type="range" min="0" max="12" step="0.5" value="3">
+          </div>
+          <div class="slider-row">
+            <div class="top"><label for="attendance">Class attendance</label><span class="val"><output id="o_attendance">75</output>%</span></div>
+            <input id="attendance" name="attendance" type="range" min="0" max="100" step="1" value="75">
+          </div>
+          <div class="slider-row">
+            <div class="top"><label for="previous_marks">Marks in your last exam</label><span class="val"><output id="o_previous_marks">55</output> / 100</span></div>
+            <input id="previous_marks" name="previous_marks" type="range" min="0" max="100" step="1" value="55">
+          </div>
+          <div id="alert" class="alert" role="alert"></div>
+          <button id="predict-btn" class="btn big" style="width:100%" type="submit">Check my forecast</button>
+        </form>
+      </section>
+
+      <section class="card" id="result-card" aria-live="polite">
+        <h2>Your forecast</h2>
+        <div id="result">
+          <div class="placeholder"><div class="emoji">&#128302;</div>Your forecast will appear here.</div>
+        </div>
+      </section>
+    </div>
+
+    <div class="two-col" style="margin-top:24px">
+      <section class="card">
+        <h2>Your progress</h2>
+        <div class="chart-box"><canvas id="history-chart"></canvas></div>
+        <div id="chart-empty" class="empty" style="display:none">Check your forecast a few times to see your progress here.</div>
+      </section>
+      <section class="card">
+        <h2>Recent checks</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>When</th><th>Study</th><th>Attend.</th><th>Last exam</th><th>Forecast</th></tr></thead>
+            <tbody id="history-body"></tbody>
+          </table>
+        </div>
+        <div id="history-empty" class="empty">No checks yet.</div>
+      </section>
+    </div>
+    <p class="disclaimer">Forecasts are estimates based on patterns in sample data. They are not guarantees.</p>
+  </div>
+</main>
+{% endblock %}
+{% block scripts %}
+<script src="/static/js/chart.umd.js"></script>
+<script src="/static/js/dashboard.js"></script>
+{% endblock %}
